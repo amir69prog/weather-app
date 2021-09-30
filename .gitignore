@@ -1,1 +1,2 @@
-venv/
+weather_venv/
+weather_api_key.txt
