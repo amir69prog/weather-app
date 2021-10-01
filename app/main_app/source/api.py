@@ -8,7 +8,7 @@ class WeatherAPI:
 	""" The API of open weather map """
 	
 	def get_api_key(self):
-		API_KEY_FILE = open('../../weather_api_key.txt','r')
+		API_KEY_FILE = open('../weather_api_key.txt','r')
 		with API_KEY_FILE as file:
 			api_key = file.read()
 			file.close()
@@ -30,8 +30,8 @@ class IconStateWeatherAPI(WeatherAPI):
 	
 	def __call__(self):
 		request = requests.get(self.url_icon)
-		response = request.text
-		return response.encode('utf-8')
+		response = request.content
+		return response
 
 
 class CityWeatherAPI(WeatherAPI):
@@ -43,6 +43,7 @@ class CityWeatherAPI(WeatherAPI):
 	def get_weather(self,city_name):
 		""" Get the weather json data """
 		response = None
+		print(city_name)
 		if city_name:
 			parameters = {
 				'q':city_name,

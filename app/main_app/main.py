@@ -3,13 +3,14 @@ from source import (
 		QWidget,
 		loadUi,
 		QIcon,
+		QPixmap,
+		Qt,
 		sys,
+		os,
 		IconStateWeatherAPI,
 		CityWeatherAPI,
-		Qt,
 		CityNotFoundError,
-		QPixmap,
-		os,
+		CityNotFoundMessage,
 	)
 
 
@@ -18,8 +19,6 @@ os.chdir('E:/All-Project/windows/weather-app/app/main_app')
 
 # todo : get the date and time as well
 # todo : get the current location and the weather
-# todo : create message box
-# todo : set none fieds
 
 class BackgroundPixmap(QPixmap):
 	""" back ground image """
@@ -101,12 +100,20 @@ class MainWeather(QWidget):
 					data_weather = WeatherData(self,filtered_data,icon_state)
 					data_weather.settings()
 
-			except CityNotFoundError:
+			except CityNotFoundError as error_desc:
 				# todo : create message box ,set none fileds
-				pass
-		else:
-			# todo : create message box ,set none fileds
-			pass
+				self.set_empty_fields()
+				message = CityNotFoundMessage(self,str(error_desc))
+				message.exec_()
+
+
+	def set_empty_fields(self):
+		self.region.setText('')
+		self.temp.setText('0°')
+		self.humidity.setText('0%')
+		self.weather_state.setText('')
+		self.weather_state.setIcon(QIcon())
+		self.background.setPixmap(QPixmap('../images/photoes/blur.jpg'))
 
 
 # run app
