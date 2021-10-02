@@ -39,9 +39,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>430</y>
+     <y>380</y>
      <width>401</width>
-     <height>151</height>
+     <height>201</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -58,7 +58,7 @@ background-color:qlineargradient(spread:pad, x1:0.523, y1:1, x2:0.506, y2:0, sto
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>10</y>
+      <y>60</y>
       <width>161</width>
       <height>131</height>
      </rect>
@@ -85,7 +85,7 @@ color:rgb(255, 255, 255)</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
+      <y>50</y>
       <width>71</width>
       <height>141</height>
      </rect>
@@ -116,7 +116,7 @@ color:rgb(255, 255, 255)</string>
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>10</y>
+      <y>60</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -147,7 +147,7 @@ color:rgb(255, 255, 255)</string>
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>90</y>
+      <y>130</y>
       <width>41</width>
       <height>41</height>
      </rect>
@@ -175,7 +175,7 @@ color:rgb(255, 255, 255)</string>
     <property name="geometry">
      <rect>
       <x>310</x>
-      <y>20</y>
+      <y>60</y>
       <width>141</width>
       <height>31</height>
      </rect>
@@ -198,8 +198,8 @@ color:rgb(255, 255, 255)</string>
    <widget class="QLabel" name="humidity">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>100</y>
+      <x>310</x>
+      <y>140</y>
       <width>141</width>
       <height>31</height>
      </rect>
@@ -211,6 +211,30 @@ color:rgb(255, 255, 255)</string>
     </property>
     <property name="text">
      <string>0%</string>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="time">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">	font: 30 12pt &quot;Verdana Pro Light&quot;;
+background-color:transparent;
+color:rgb(255, 255, 255)</string>
+    </property>
+    <property name="text">
+     <string/>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -284,7 +308,6 @@ padding-left:5px;
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
-background-color:transparent;
 color:rgb(255, 255, 255);
 border:0.5 solid #fff;
 border-radius:8px;
@@ -302,12 +325,12 @@ border-radius:8px;
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../images/icons/search.png</normaloff>../images/icons/search.png</iconset>
+     <normaloff>../images/icons/search_2.png</normaloff>../images/icons/search_2.png</iconset>
    </property>
    <property name="iconSize">
     <size>
-     <width>25</width>
-     <height>25</height>
+     <width>30</width>
+     <height>30</height>
     </size>
    </property>
   </widget>

@@ -21,6 +21,8 @@ from source import (
 	ConnectionErrorMessage,
 )
 from requests.exceptions import ConnectionError
+from timezonefinder import TimezoneFinder
+import pytz,datetime
 
 
 os.chdir('E:/All-Project/windows/weather-app/app/main_app')
@@ -28,6 +30,17 @@ os.chdir('E:/All-Project/windows/weather-app/app/main_app')
 
 # todo : get the date and time as well
 # todo : get the current location and the weather
+
+class TimezoneLocation:
+	@staticmethod
+	def get_timezone(latitude,longitude):
+		tz_finder = TimezoneFinder()
+		return tz_finder.timezone_at(lng=longitude, lat=latitude)
+
+class TimeRegion:
+	def get_time(self,timezone):
+		return datetime.datetime.now(pytz.timezone(timezone))
+
 
 class BackgroundPixmap(QPixmap):
 	""" back ground image """
@@ -39,10 +52,11 @@ class BackgroundPixmap(QPixmap):
 class WeatherData:
 	""" The class that set the information in the main """
 
-	def __init__(self,parent,data,icon):
+	def __init__(self,parent,data,icon,time):
 		self.parent = parent
 		self.icon = icon
 		self.data = data
+		self.val_time = time
 
 	def set_icon_weather(self):
 		""" set the status of weather with icon """
@@ -52,6 +66,9 @@ class WeatherData:
 			icon = QIcon('../images/icons/{}.png'.format(self.data['icon_state']))
 			self.parent.weather_state.setIcon(icon)
 
+	def time_format(self):
+		formatted_time = '{0:%H}:{0:%M}:{0:%S}'.format(self.val_time)
+		return formatted_time
 
 	def set_background(self):
 		""" Set the background """
@@ -68,6 +85,7 @@ class WeatherData:
 		self.parent.temp.setText(template_temp)
 		self.parent.wind.setText(str(self.data['wind_speed']))
 		self.parent.humidity.setText(str(self.data['humidity']) + '%')
+		self.parent.time.setText('time : ' + self.time_format())
 		self.set_icon_weather()
 		self.set_background()
 
@@ -103,10 +121,16 @@ class MainWeather(QWidget):
 				if data:
 					# filter to the standard data
 					filtered_data = weather.filter_weather_data(data)
+					# get the timein the city
+					timezone_location = TimezoneLocation()
+					timezone_ = timezone_location.get_timezone(
+						filtered_data['lat'],
+						filtered_data['lon']
+					)
+					time = TimeRegion().get_time(timezone_)
 					# the icon of weather state
-					print(filtered_data)
 					icon_state = IconStateWeatherAPI(filtered_data['icon_state'])()
-					data_weather = WeatherData(self,filtered_data,icon_state)
+					data_weather = WeatherData(self,filtered_data,icon_state,time)
 					data_weather.settings()
 
 			except APIFileNotFoundError as error_desc:
@@ -123,7 +147,6 @@ class MainWeather(QWidget):
 				message = APIFileNotFoundMessage(self,text)
 				message.exec_()
 			except CityNotFoundError as error_desc:
-				self.set_empty_fields()
 				message = CityNotFoundMessage(self,str(error_desc))
 				message.exec_()
 
@@ -133,6 +156,7 @@ class MainWeather(QWidget):
 		self.temp.setText('0°')
 		self.humidity.setText('0%')
 		self.weather_state.setText('')
+		self.time.setText('')
 		self.weather_state.setIcon(QIcon())
 		self.background.setPixmap(QPixmap('../images/photoes/blur.jpg'))
 

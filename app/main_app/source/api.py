@@ -75,6 +75,8 @@ class CityWeatherAPI(WeatherAPI):
 				'city_name':data['name'],
 				'country':data['sys']['country'],
 				'timezone':data['timezone'],
+				'lat':data['coord']['lat'],
+				'lon':data['coord']['lon'],
 			}
 		except KeyError as error:
 			final_data = data
