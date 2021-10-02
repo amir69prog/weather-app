@@ -1,17 +1,24 @@
 from source import (
-		QApplication,
-		QWidget,
-		loadUi,
-		QIcon,
-		QPixmap,
-		Qt,
-		sys,
-		os,
-		IconStateWeatherAPI,
-		CityWeatherAPI,
-		CityNotFoundError,
-		CityNotFoundMessage,
-	)
+	QApplication,
+	QWidget,
+	loadUi,
+	QIcon,
+	QPixmap,
+	Qt,
+	sys,
+	os,
+	# api
+	IconStateWeatherAPI,
+	CityWeatherAPI,
+	# execptions
+	CityNotFoundError,
+	InvalidAPIKeyError,
+	APIFileNotFoundError,
+	# messages
+	APIFileNotFoundMessage,
+	CityNotFoundMessage,
+	InvalidAPIKeyMessage,
+)	
 
 
 os.chdir('E:/All-Project/windows/weather-app/app/main_app')
@@ -101,9 +108,16 @@ class MainWeather(QWidget):
 					data_weather.settings()
 
 			except CityNotFoundError as error_desc:
-				# todo : create message box ,set none fileds
 				self.set_empty_fields()
 				message = CityNotFoundMessage(self,str(error_desc))
+				message.exec_()
+			except InvalidAPIKeyError as error_desc:
+				self.set_empty_fields()
+				message = InvalidAPIKeyMessage(self,str(error_desc))
+				message.exec_()
+			except APIFileNotFoundError as error_desc:
+				self.set_empty_fields()
+				message = APIFileNotFoundMessage(self,str(error_desc))
 				message.exec_()
 
 

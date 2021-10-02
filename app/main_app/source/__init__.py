@@ -7,5 +7,5 @@ from PyQt5.QtGui import QIcon, QPixmap,QFont
 from PyQt5.QtCore import Qt
 
 from .api import IconStateWeatherAPI, CityWeatherAPI
-from .exceptions import CityNotFoundError
-from .messages import CityNotFoundMessage
+from .exceptions import CityNotFoundError,InvalidAPIKeyError,APIFileNotFoundError
+from .messages import CityNotFoundMessage,InvalidAPIKeyMessage,APIFileNotFoundMessage

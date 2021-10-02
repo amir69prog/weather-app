@@ -1,6 +1,6 @@
 import requests
 import os
-from .exceptions import CityNotFoundError
+from .exceptions import CityNotFoundError,InvalidAPIKeyError,APIFileNotFoundError
 
 
 
@@ -15,16 +15,19 @@ class WeatherAPI:
 		self.api_key = api_key
 
 
-	def __init__(self,url):
+	def __init__(self,url=None):
 		self.url = url
-		self.get_api_key()
-
+		try:
+			self.get_api_key()
+		except FileNotFoundError:
+			msg = 'The api key file not found\nPlease read the \'README.md\' file for more information.'
+			raise APIFileNotFoundError(msg)
 
 class IconStateWeatherAPI(WeatherAPI):
 	""" get the Icon weather state """
 	
 	def __init__(self,icon):
-		super().__init__('http://openweathermap.org/img/wn/10d@2x.png')
+		super().__init__()
 		self.icon = icon
 		self.url_icon = "http://openweathermap.org/img/wn/{icon_code}@2x.png".format(icon_code=self.icon)
 	
@@ -43,7 +46,6 @@ class CityWeatherAPI(WeatherAPI):
 	def get_weather(self,city_name):
 		""" Get the weather json data """
 		response = None
-		print(city_name)
 		if city_name:
 			parameters = {
 				'q':city_name,
@@ -52,9 +54,12 @@ class CityWeatherAPI(WeatherAPI):
 			}
 			request = requests.get(self.url,params=parameters)
 			response = request.json()
-			if response.get('cod') and response.get('cod') == '404':
+			if response.get('cod') == '404': # not found
 				msg = 'Sorry i could\'nt found the %r' % city_name
 				raise CityNotFoundError(msg)
+			elif response.get('cod') == 401: # invalid code
+				msg = 'Invalid Api Key...\nPlease read the \'README.md\' file for more information.'
+				raise InvalidAPIKeyError(msg)
 		return response
 
 	@staticmethod
