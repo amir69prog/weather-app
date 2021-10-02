@@ -3,7 +3,7 @@ Get the weather of the regions very easily with this program
 
 
 # Requirements
-just install the pckages in the requiremetns.txt file
+just install the packages in the requiremetns.txt file
 ```python
 pip install requirements.txt
 ```
