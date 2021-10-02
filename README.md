@@ -5,7 +5,7 @@ Get the weather of the regions very easily with this program
 # Requirements
 just install the packages in the requiremetns.txt file
 ```python
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 # Check this out
