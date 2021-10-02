@@ -18,7 +18,9 @@ from source import (
 	APIFileNotFoundMessage,
 	CityNotFoundMessage,
 	InvalidAPIKeyMessage,
-)	
+	ConnectionErrorMessage,
+)
+from requests.exceptions import ConnectionError
 
 
 os.chdir('E:/All-Project/windows/weather-app/app/main_app')
@@ -107,17 +109,22 @@ class MainWeather(QWidget):
 					data_weather = WeatherData(self,filtered_data,icon_state)
 					data_weather.settings()
 
-			except CityNotFoundError as error_desc:
+			except APIFileNotFoundError as error_desc:
 				self.set_empty_fields()
-				message = CityNotFoundMessage(self,str(error_desc))
+				message = APIFileNotFoundMessage(self,str(error_desc))
 				message.exec_()
 			except InvalidAPIKeyError as error_desc:
 				self.set_empty_fields()
 				message = InvalidAPIKeyMessage(self,str(error_desc))
 				message.exec_()
-			except APIFileNotFoundError as error_desc:
+			except ConnectionError:
 				self.set_empty_fields()
-				message = APIFileNotFoundMessage(self,str(error_desc))
+				text = 'Connection error\nplease check your connection...'
+				message = APIFileNotFoundMessage(self,text)
+				message.exec_()
+			except CityNotFoundError as error_desc:
+				self.set_empty_fields()
+				message = CityNotFoundMessage(self,str(error_desc))
 				message.exec_()
 
 

@@ -44,3 +44,18 @@ class APIFileNotFoundMessage(QMessageBox):
 		self.setStandardButtons(QMessageBox.Ok)
 
 		self.show()
+
+
+class ConnectionErrorMessage(QMessageBox):
+	""" message to say connection error """
+
+	def __init__(self,parent,text):
+		super().__init__(parent)
+		self.setWindowTitle('Error')
+		font = QFont('Verdana Pro Cond', 12)
+		self.setFont(font)
+		self.setText(text)
+		self.setIcon(QMessageBox.Critical)
+		self.setStandardButtons(QMessageBox.Ok)
+
+		self.show()
