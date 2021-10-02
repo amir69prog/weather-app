@@ -2,6 +2,12 @@
 Get the weather of the regions very easily with this program
 
 
+# Requirements
+just install the pckages in the requiremetns.txt file
+```python
+pip install requirements.txt
+```
+
 # Check this out
 i use an api to get the weather
 
