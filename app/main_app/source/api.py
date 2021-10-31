@@ -65,20 +65,17 @@ class CityWeatherAPI(WeatherAPI):
 	@staticmethod
 	def filter_weather_data(data: dict) -> dict:
 		""" Filter the weather data """
-		try:
-			final_data = {
-				'state':data['weather'][0]['main'],
-				'icon_state':data['weather'][0]['icon'],
-				'temp':data['main']['temp'],
-				'humidity':data['main']['humidity'],
-				'wind_speed':data['wind']['speed'],
-				'city_name':data['name'],
-				'country':data['sys']['country'],
-				'timezone':data['timezone'],
-				'lat':data['coord']['lat'],
-				'lon':data['coord']['lon'],
-			}
-		except KeyError as error:
-			final_data = data
+		final_data = {
+			'state':data.get('weather')[0].get('main'),
+			'icon_state':data.get('weather')[0].get('icon'),
+			'temp':data.get('main').get('temp'),
+			'humidity':data.get('main').get('humidity'),
+			'wind_speed':data.get('wind').get('speed'),
+			'city_name':data.get('name'),
+			'country':data.get('sys').get('country'),
+			'timezone':data.get('timezone'),
+			'lat':data.get('coord').get('lat'),
+			'lon':data.get('coord').get('lon'),
+		}
 
 		return final_data
