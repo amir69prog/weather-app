@@ -28,8 +28,6 @@ import pytz,datetime
 os.chdir('E:/All-Project/windows/weather-app/app/main_app')
 
 
-# todo : get the date and time as well
-# todo : get the current location and the weather
 
 class TimezoneLocation:
 	@staticmethod
