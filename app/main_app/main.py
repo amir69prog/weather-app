@@ -7,26 +7,24 @@ from source import (
 	Qt,
 	sys,
 	os,
-	# api
 	IconStateWeatherAPI,
 	CityWeatherAPI,
-	# execptions
 	CityNotFoundError,
 	InvalidAPIKeyError,
 	APIFileNotFoundError,
-	# messages
 	APIFileNotFoundMessage,
 	CityNotFoundMessage,
 	InvalidAPIKeyMessage,
 	ConnectionErrorMessage,
 )
+
 from requests.exceptions import ConnectionError
 from timezonefinder import TimezoneFinder
 import pytz,datetime
+from pathlib import Path 
 
-
-os.chdir('E:/All-Project/windows/weather-app/app/main_app')
-
+BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 
 class TimezoneLocation:
@@ -61,7 +59,7 @@ class WeatherData:
 		if self.icon:
 			self.parent.weather_state.setText(self.data['state'])
 			# pixmap icon
-			icon = QIcon('../images/icons/{}.png'.format(self.data['icon_state']))
+			icon = QIcon(str(BASE_DIR / 'images/icons/{}.png'.format(self.data['icon_state'])))
 			self.parent.weather_state.setIcon(icon)
 
 	def time_format(self):
@@ -71,9 +69,9 @@ class WeatherData:
 	def set_background(self):
 		""" Set the background """
 		try:
-			pixmap_file = BackgroundPixmap(f'../images/photoes/{self.data["state"]}.jpg')
+			pixmap_file = BackgroundPixmap(str(BASE_DIR / f'images/photoes/{self.data["state"]}.jpg'))
 		except:
-			pixmap_file = BackgroundPixmap(f'../images/photoes/blur.jpg')
+			pixmap_file = BackgroundPixmap(str(BASE_DIR / f'../images/photoes/blur.jpg'))
 		self.parent.background.setPixmap(pixmap_file)
 
 
@@ -94,7 +92,7 @@ class MainWeather(QWidget):
 
 	def __init__(self):
 		super().__init__()
-		loadUi('../ui/main.ui',self)
+		loadUi(str(BASE_DIR / 'ui/main.ui'),self)
 		self.settings() # set the details
 
 		# Signals
@@ -103,7 +101,7 @@ class MainWeather(QWidget):
 	def settings(self):
 		""" Set the Detail information """
 		self.setWindowTitle("Weather")
-		self.setWindowIcon(QIcon('../images/icons/icon_summer.png'))
+		self.setWindowIcon(QIcon(str(BASE_DIR /  'images/icons/icon_summer.png')))
 		self.setFixedSize(399,576)
 
 
@@ -156,7 +154,7 @@ class MainWeather(QWidget):
 		self.weather_state.setText('')
 		self.time.setText('')
 		self.weather_state.setIcon(QIcon())
-		self.background.setPixmap(QPixmap('../images/photoes/blur.jpg'))
+		self.background.setPixmap(QPixmap(str(BASE_DIR /  'images/photoes/blur.jpg')))
 
 
 # run app

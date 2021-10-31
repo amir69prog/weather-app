@@ -2,13 +2,17 @@ import requests
 import os
 from .exceptions import CityNotFoundError,InvalidAPIKeyError,APIFileNotFoundError
 
+from pathlib import Path 
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+print(BASE_DIR)
 
 
 class WeatherAPI:
 	""" The API of open weather map """
 	
 	def get_api_key(self):
-		API_KEY_FILE = open('../weather_api_key.txt','r')
+		API_KEY_FILE = open(str(BASE_DIR / 'weather_api_key.txt'),'r')
 		with API_KEY_FILE as file:
 			api_key = file.read()
 			file.close()
